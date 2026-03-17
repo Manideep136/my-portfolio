@@ -1,380 +1,1251 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manideep's Portfolio</title>
-    <style>
-        /* --- GENERAL STYLES --- */
-        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; line-height: 1.6; color: #333; }
-        header { background: #2c3e50; color: white; padding: 2rem 0; text-align: center; }
-        header h1 { margin: 0; font-size: 2.5rem; }
-        header p { font-size: 1.2rem; opacity: 0.8; }
-        
-        nav { background: #34495e; padding: 10px; text-align: center; position: sticky; top: 0; z-index: 100; }
-        nav a { color: white; text-decoration: none; margin: 0 15px; font-weight: bold; }
-        nav a:hover { text-decoration: underline; color: #3498db; }
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manideep Kolluri | ECE Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg:       #070910;
+      --bg2:      #0d0f17;
+      --bg3:      #12141f;
+      --card:     #0f1118;
+      --teal:     #00e5b0;
+      --teal2:    #00b8d4;
+      --teal-dim: rgba(0,229,176,0.08);
+      --teal-border: rgba(0,229,176,0.18);
+      --text:     #dde1f0;
+      --muted:    #5a607a;
+      --border:   rgba(255,255,255,0.06);
+      --mono:     'DM Mono', monospace;
+      --sans:     'Outfit', sans-serif;
+    }
 
-        .container { max-width: 1000px; margin: auto; padding: 20px; }
-        
-        section { margin-bottom: 40px; padding: 20px; background: #f9f9f9; border-radius: 8px; }
-        h2 { border-bottom: 2px solid #2c3e50; padding-bottom: 10px; color: #2c3e50; }
-        
-        /* --- EDUCATION STYLES --- */
-        .edu-item { margin-bottom: 20px; border-left: 4px solid #3498db; padding-left: 15px; }
-        .edu-degree { font-weight: bold; font-size: 1.2rem; color: #2c3e50; }
-        .edu-school { font-style: italic; color: #555; }
-        .edu-year { font-size: 0.9rem; color: #777; background: #eee; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-bottom: 5px;}
-        .edu-score { font-weight: bold; color: #27ae60; display: block; margin-top: 5px; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
-        /* --- PROJECT CARDS --- */
-        .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .card { background: white; border: 1px solid #ddd; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: transform 0.2s; }
-        .card:hover { transform: translateY(-5px); }
-        .card img { width: 100%; height: 180px; object-fit: cover; background: #eee; border-radius: 4px; }
-        .card h3 { margin-top: 15px; margin-bottom: 5px; }
-        
-        /* The Button Style */
-        .btn { 
-            display: inline-block; 
-            background: #2980b9; 
-            color: white; 
-            padding: 10px 15px; 
-            text-decoration: none; 
-            border-radius: 5px; 
-            margin-top: 10px; 
-            cursor: pointer; 
-            border: none; 
-            font-size: 1rem;
-        }
-        .btn:hover { background: #1c5980; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
 
-        /* --- CONTACT LIST --- */
-        ul { list-style: none; padding: 0; }
-        ul li { margin-bottom: 10px; }
-        a { color: #2980b9; }
+    /* SCROLLBAR */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--teal); border-radius: 2px; }
 
-        /* --- POPUP MODAL STYLES --- */
-        .modal {
-            display: none; /* Hidden by default */
-            position: fixed; 
-            z-index: 1000; 
-            left: 0;
-            top: 0;
-            width: 100%; 
-            height: 100%; 
-            overflow: auto; 
-            background-color: rgba(0,0,0,0.6); /* Black with opacity */
-            backdrop-filter: blur(5px);
-        }
+    /* NOISE */
+    body::after {
+      content:'';
+      position:fixed; inset:0;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events:none; z-index:9999; opacity:0.5;
+    }
 
-        .modal-content {
-            background-color: #fefefe;
-            margin: 5% auto; 
-            padding: 30px;
-            border: 1px solid #888;
-            width: 85%; 
-            max-width: 800px; 
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            position: relative;
-            max-height: 85vh; 
-            overflow-y: auto;
-        }
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top:0; left:0; right:0; z-index:500;
+      display: flex; align-items:center; justify-content:space-between;
+      padding: 0.9rem 4rem;
+      background: rgba(7,9,16,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 0.9rem;
+      color: var(--teal);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+    }
+    .nav-links { display:flex; gap:2.5rem; list-style:none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--teal); }
 
-        .close-btn {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .close-btn:hover { color: #000; }
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 8rem 4rem 4rem;
+      position: relative; overflow: hidden;
+    }
 
-        /* Styles for the text inside the popup */
-        .modal-body h3 { border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 25px; color: #2c3e50; font-size: 1.4rem; }
-        .modal-body h4 { margin-top: 15px; margin-bottom: 5px; color: #555; }
-        .modal-body ul, .modal-body ol { margin-top: 5px; padding-left: 25px; }
-        .modal-body li { margin-bottom: 8px; }
-        
-        /* Tags for technologies */
-        .tech-tag { 
-            background: #e0f2fe; 
-            color: #0369a1; 
-            padding: 5px 12px; 
-            border-radius: 15px; 
-            font-size: 0.9rem; 
-            margin-right: 5px; 
-            display: inline-block; 
-            margin-bottom: 5px;
-            border: 1px solid #bae6fd;
-        }
+    /* grid bg */
+    #hero::before {
+      content:'';
+      position:absolute; inset:0;
+      background-image:
+        linear-gradient(rgba(0,229,176,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,229,176,0.035) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 40%, black 30%, transparent 100%);
+    }
 
-        footer { text-align: center; padding: 20px; background: #2c3e50; color: white; margin-top: 40px; }
-    </style>
+    .hero-orb {
+      position:absolute;
+      border-radius:50%;
+      filter: blur(80px);
+      pointer-events:none;
+    }
+    .orb1 { width:480px; height:480px; top:-100px; right:-80px; background: radial-gradient(circle, rgba(0,229,176,0.14), transparent 70%); animation: drift 9s ease-in-out infinite; }
+    .orb2 { width:360px; height:360px; bottom:-80px; left:-60px; background: radial-gradient(circle, rgba(0,184,212,0.1), transparent 70%); animation: drift 12s ease-in-out infinite reverse; }
+    @keyframes drift { 0%,100%{transform:translate(0,0)} 50%{transform:translate(24px,-32px)} }
+
+    .hero-inner {
+      position:relative; z-index:1;
+      max-width:1060px; margin:auto; width:100%;
+      display: grid; grid-template-columns: 1fr 0.6fr; gap: 4rem; align-items:center;
+    }
+
+    .hero-available {
+      display:inline-flex; align-items:center; gap:0.5rem;
+      background: var(--teal-dim); border: 1px solid var(--teal-border);
+      color: var(--teal); font-family: var(--mono); font-size: 0.72rem;
+      padding: 0.35rem 0.9rem; border-radius:100px;
+      margin-bottom: 1.4rem;
+      animation: rise 0.6s ease both;
+    }
+    .dot { width:7px; height:7px; border-radius:50%; background:var(--teal); animation: blink 2s infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.25} }
+
+    h1.hero-name {
+      font-size: clamp(2.8rem, 6vw, 5.2rem);
+      font-weight: 900;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      animation: rise 0.6s 0.08s ease both;
+    }
+    h1.hero-name .grad {
+      display:block;
+      background: linear-gradient(110deg, var(--teal) 0%, var(--teal2) 100%);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    }
+
+    .hero-role {
+      margin-top:1.1rem;
+      font-size:1.1rem; color:var(--muted); font-weight:400;
+      animation: rise 0.6s 0.16s ease both;
+    }
+    .hero-role strong { color: var(--text); }
+
+    .hero-desc {
+      margin-top:1.2rem;
+      font-size:0.97rem; color:#7a8098; line-height:1.8; max-width:500px;
+      animation: rise 0.6s 0.22s ease both;
+    }
+
+    .hero-actions {
+      margin-top:2rem; display:flex; gap:1rem; flex-wrap:wrap;
+      animation: rise 0.6s 0.3s ease both;
+    }
+
+    .btn-teal {
+      background: var(--teal); color:#070910;
+      padding: 0.7rem 1.6rem; border-radius:8px;
+      font-family:var(--sans); font-weight:700; font-size:0.9rem;
+      text-decoration:none; border:none; cursor:pointer;
+      transition: transform 0.18s, box-shadow 0.18s;
+    }
+    .btn-teal:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(0,229,176,0.28); }
+
+    .btn-outline {
+      background:transparent; color:var(--text);
+      padding: 0.7rem 1.6rem; border-radius:8px;
+      font-family:var(--sans); font-weight:600; font-size:0.9rem;
+      text-decoration:none; border:1px solid var(--border); cursor:pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-outline:hover { border-color:var(--teal); color:var(--teal); }
+
+    /* hero right: stats card */
+    .hero-stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius:20px;
+      padding:2rem;
+      display:flex; flex-direction:column; gap:1.4rem;
+      animation: rise 0.6s 0.35s ease both;
+    }
+    .stat-row { display:flex; flex-direction:column; }
+    .stat-num { font-family:var(--mono); font-size:2.2rem; font-weight:500; color:var(--teal); }
+    .stat-lbl { font-size:0.78rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-top:0.15rem; }
+    .stat-divider { height:1px; background:var(--border); }
+
+    @keyframes rise { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+    /* ─── SECTION BASE ─── */
+    .wrap { max-width:1060px; margin:auto; padding:6rem 4rem; }
+
+    .sec-eyebrow {
+      font-family:var(--mono); font-size:0.72rem;
+      color:var(--teal); text-transform:uppercase; letter-spacing:0.18em;
+      margin-bottom:0.6rem;
+    }
+    .sec-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight:800; letter-spacing:-0.025em; line-height:1.1;
+      margin-bottom:3rem;
+    }
+    .sec-title em { font-style:normal; color:var(--teal); }
+
+    /* ─── ABOUT ─── */
+    #about { background: var(--bg2); }
+    .about-grid { display:grid; grid-template-columns:1.1fr 0.9fr; gap:4rem; align-items:start; }
+
+    .about-body p { color:#8590ac; font-size:0.97rem; line-height:1.85; margin-bottom:1rem; }
+    .about-body p strong { color:var(--text); }
+    .about-seeking {
+      margin-top:1.5rem;
+      padding:1rem 1.4rem;
+      background:var(--teal-dim);
+      border-left:3px solid var(--teal);
+      border-radius:0 10px 10px 0;
+      color:var(--teal); font-weight:600; font-size:0.92rem;
+    }
+
+    .info-list { display:flex; flex-direction:column; gap:0.8rem; }
+    .info-row {
+      display:flex; align-items:center; gap:1rem;
+      background:var(--card); border:1px solid var(--border);
+      border-radius:12px; padding:1rem 1.2rem;
+      transition:border-color 0.2s;
+    }
+    .info-row:hover { border-color:var(--teal-border); }
+    .info-ico { font-size:1.3rem; flex-shrink:0; }
+    .info-row-inner { display:flex; flex-direction:column; }
+    .info-lbl { font-size:0.7rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.09em; }
+    .info-val { font-size:0.88rem; font-weight:600; color:var(--text); word-break:break-all; }
+    .info-val a { color:var(--teal); text-decoration:none; }
+    .info-val a:hover { text-decoration:underline; }
+
+    /* ─── SKILLS ─── */
+    #skills { background:var(--bg); }
+    .skills-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(290px,1fr)); gap:1.5rem; }
+
+    .skill-card {
+      background:var(--card); border:1px solid var(--border);
+      border-radius:16px; padding:1.6rem;
+      transition:border-color 0.25s, transform 0.25s;
+    }
+    .skill-card:hover { border-color:var(--teal-border); transform:translateY(-4px); }
+
+    .skill-card-title {
+      font-family:var(--mono); font-size:0.72rem; color:var(--teal);
+      text-transform:uppercase; letter-spacing:0.14em; margin-bottom:1.25rem;
+    }
+
+    .bar-item { margin-bottom:1.1rem; }
+    .bar-top { display:flex; justify-content:space-between; margin-bottom:0.35rem; }
+    .bar-name { font-size:0.88rem; font-weight:600; }
+    .bar-pct { font-family:var(--mono); font-size:0.75rem; color:var(--muted); }
+    .bar-track { height:3px; background:rgba(255,255,255,0.07); border-radius:2px; overflow:hidden; }
+    .bar-fill {
+      height:100%; border-radius:2px;
+      background:linear-gradient(90deg, var(--teal), var(--teal2));
+      width:0; transition:width 1.1s cubic-bezier(0.22,1,0.36,1);
+    }
+
+    .tag-wrap { display:flex; flex-wrap:wrap; gap:0.45rem; }
+    .tag {
+      background:rgba(0,184,212,0.1); border:1px solid rgba(0,184,212,0.22);
+      color:#72d8ea; padding:0.28rem 0.75rem;
+      border-radius:6px; font-size:0.8rem; font-weight:500;
+    }
+
+    /* ─── EDUCATION ─── */
+    #education { background:var(--bg2); }
+    .edu-timeline { position:relative; padding-left:2.5rem; display:flex; flex-direction:column; gap:2rem; }
+    .edu-timeline::before {
+      content:''; position:absolute; left:0; top:8px; bottom:8px; width:2px;
+      background:linear-gradient(to bottom, var(--teal), var(--teal2), rgba(0,229,176,0.05));
+      border-radius:2px;
+    }
+    .edu-entry {
+      position:relative;
+      background:var(--card); border:1px solid var(--border);
+      border-radius:14px; padding:1.5rem 1.75rem;
+      transition:border-color 0.2s;
+    }
+    .edu-entry:hover { border-color:var(--teal-border); }
+    .edu-entry::before {
+      content:''; position:absolute; left:-2.65rem; top:1.55rem;
+      width:10px; height:10px; border-radius:50%;
+      background:var(--teal); border:2px solid var(--bg2);
+      box-shadow:0 0 10px rgba(0,229,176,0.5);
+    }
+    .edu-year {
+      font-family:var(--mono); font-size:0.72rem; color:var(--teal);
+      background:var(--teal-dim); border:1px solid var(--teal-border);
+      padding:0.2rem 0.7rem; border-radius:100px;
+      display:inline-block; margin-bottom:0.5rem;
+    }
+    .edu-degree { font-size:1.05rem; font-weight:700; color:var(--text); }
+    .edu-school { font-size:0.88rem; color:var(--muted); margin-top:0.2rem; }
+    .edu-score { display:inline-block; margin-top:0.6rem; font-family:var(--mono); font-size:0.82rem; color:#4ade80; font-weight:500; }
+
+    /* ─── PROJECTS ─── */
+    #projects { background:var(--bg); }
+    .projects-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:1.5rem; }
+
+    .proj-card {
+      background:var(--card); border:1px solid var(--border);
+      border-radius:16px; overflow:hidden;
+      display:flex; flex-direction:column;
+      transition:border-color 0.25s, transform 0.25s;
+    }
+    .proj-card:hover { border-color:var(--teal-border); transform:translateY(-5px); }
+
+    .proj-banner {
+      height:160px; display:flex; align-items:center; justify-content:center;
+      font-size:3rem; position:relative; overflow:hidden;
+    }
+    .proj-banner::before {
+      content:''; position:absolute; inset:0;
+      background:linear-gradient(135deg, rgba(0,229,176,0.12), rgba(0,184,212,0.06));
+    }
+    .proj-banner-icon { position:relative; z-index:1; }
+
+    .proj-body { padding:1.5rem; flex:1; display:flex; flex-direction:column; }
+    .proj-title { font-size:1.05rem; font-weight:700; margin-bottom:0.5rem; }
+    .proj-desc { font-size:0.87rem; color:#7a8098; line-height:1.7; flex:1; }
+    .proj-tags { display:flex; flex-wrap:wrap; gap:0.4rem; margin:1rem 0; }
+    .proj-tag {
+      background:var(--teal-dim); border:1px solid var(--teal-border);
+      color:var(--teal); font-size:0.75rem; font-weight:600;
+      padding:0.2rem 0.65rem; border-radius:5px;
+    }
+    .proj-footer { display:flex; justify-content:flex-end; }
+    .proj-btn {
+      font-family:var(--sans); font-size:0.82rem; font-weight:700;
+      color:var(--teal); background:var(--teal-dim); border:1px solid var(--teal-border);
+      padding:0.45rem 1rem; border-radius:7px; cursor:pointer;
+      transition:background 0.18s;
+    }
+    .proj-btn:hover { background:rgba(0,229,176,0.16); }
+
+    /* ─── CERTIFICATIONS ─── */
+    #certifications { background:var(--bg2); }
+    .certs-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:1.2rem; }
+
+    .cert-card {
+      background:var(--card); border:1px solid var(--border);
+      border-radius:14px; padding:1.4rem 1.5rem;
+      display:flex; align-items:flex-start; gap:1rem;
+      transition:border-color 0.2s, transform 0.2s;
+    }
+    .cert-card:hover { border-color:var(--teal-border); transform:translateY(-3px); }
+    .cert-icon {
+      width:44px; height:44px; border-radius:10px; flex-shrink:0;
+      background:var(--teal-dim); border:1px solid var(--teal-border);
+      display:flex; align-items:center; justify-content:center; font-size:1.3rem;
+    }
+    .cert-info { display:flex; flex-direction:column; }
+    .cert-name { font-size:0.92rem; font-weight:700; line-height:1.3; color:var(--text); }
+    .cert-issuer { font-size:0.78rem; color:var(--muted); margin-top:0.25rem; }
+    .cert-year {
+      display:inline-block; margin-top:0.5rem;
+      font-family:var(--mono); font-size:0.7rem; color:var(--teal);
+      background:var(--teal-dim); border:1px solid var(--teal-border);
+      padding:0.15rem 0.6rem; border-radius:100px;
+    }
+
+    /* ─── CERT FILTERS ─── */
+    .cert-filters {
+      display: flex; flex-wrap: wrap; gap: 0.6rem;
+      margin-bottom: 2rem;
+    }
+    .cf-btn {
+      background: var(--card); border: 1px solid var(--border);
+      color: var(--muted); font-family: var(--sans); font-size: 0.82rem;
+      font-weight: 600; padding: 0.4rem 1rem; border-radius: 100px;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .cf-btn:hover { border-color: var(--teal-border); color: var(--teal); }
+    .cf-btn.active { background: var(--teal-dim); border-color: var(--teal-border); color: var(--teal); }
+    .cf-count {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--teal-dim); color: var(--teal);
+      font-size: 0.7rem; width: 18px; height: 18px;
+      border-radius: 50%; margin-left: 0.3rem;
+    }
+    .cert-card.hidden { display: none; }
+
+    /* ─── CONTACT ─── */
+    #contact { background:var(--bg); }
+    .contact-layout { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:start; }
+
+    .contact-info-col p { color:#7a8098; font-size:0.97rem; line-height:1.8; margin-bottom:1.5rem; }
+    .contact-links { display:flex; flex-direction:column; gap:0.9rem; }
+    .contact-link-row {
+      display:flex; align-items:center; gap:1rem;
+      background:var(--card); border:1px solid var(--border);
+      border-radius:12px; padding:1rem 1.2rem;
+      text-decoration:none; color:var(--text);
+      transition:border-color 0.2s, transform 0.2s;
+    }
+    .contact-link-row:hover { border-color:var(--teal-border); transform:translateX(4px); }
+    .clr-ico { font-size:1.3rem; }
+    .clr-inner { display:flex; flex-direction:column; }
+    .clr-label { font-size:0.7rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.09em; }
+    .clr-val { font-size:0.9rem; font-weight:600; color:var(--teal); }
+
+    /* contact form */
+    .contact-form { display:flex; flex-direction:column; gap:1rem; }
+    .form-group { display:flex; flex-direction:column; gap:0.4rem; }
+    .form-group label { font-size:0.78rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.09em; font-weight:600; }
+    .form-group input,
+    .form-group textarea {
+      background:var(--card); border:1px solid var(--border);
+      color:var(--text); font-family:var(--sans); font-size:0.92rem;
+      padding:0.75rem 1rem; border-radius:10px;
+      outline:none; transition:border-color 0.2s;
+      resize:vertical;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus { border-color:var(--teal); }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color:var(--muted); }
+    .form-submit {
+      margin-top:0.5rem;
+      background:var(--teal); color:#070910;
+      border:none; cursor:pointer;
+      font-family:var(--sans); font-weight:700; font-size:0.95rem;
+      padding:0.8rem 1.6rem; border-radius:10px;
+      text-align:center; transition:transform 0.18s, box-shadow 0.18s;
+    }
+    .form-submit:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(0,229,176,0.25); }
+
+    /* form toast */
+    #form-toast {
+      display:none; margin-top:0.75rem; padding:0.75rem 1rem;
+      background:rgba(74,222,128,0.12); border:1px solid rgba(74,222,128,0.3);
+      border-radius:8px; color:#4ade80; font-size:0.88rem; text-align:center;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background:var(--bg2); border-top:1px solid var(--border);
+      text-align:center; padding:2rem 4rem;
+      font-size:0.82rem; color:var(--muted);
+    }
+    footer span { color:var(--teal); }
+
+    /* ─── MODAL ─── */
+    .modal-overlay {
+      display:none; position:fixed; inset:0; z-index:600;
+      background:rgba(0,0,0,0.75); backdrop-filter:blur(8px);
+      align-items:center; justify-content:center;
+    }
+    .modal-overlay.open { display:flex; }
+    .modal-box {
+      background:var(--bg3); border:1px solid var(--border);
+      border-radius:18px; padding:2.5rem;
+      max-width:720px; width:90%; max-height:85vh; overflow-y:auto;
+      position:relative; animation:popIn 0.25s ease;
+    }
+    @keyframes popIn { from{opacity:0;transform:scale(0.94)} to{opacity:1;transform:scale(1)} }
+    .modal-close {
+      position:absolute; top:1.2rem; right:1.5rem;
+      background:var(--border); border:none; color:var(--muted);
+      width:32px; height:32px; border-radius:50%; font-size:1.1rem;
+      cursor:pointer; display:flex; align-items:center; justify-content:center;
+      transition:color 0.2s, background 0.2s;
+    }
+    .modal-close:hover { color:var(--text); background:rgba(255,255,255,0.1); }
+    .modal-title { font-size:1.4rem; font-weight:800; margin-bottom:1.5rem; padding-right:2rem; }
+    .modal-section { margin-top:1.5rem; }
+    .modal-section h4 {
+      font-family:var(--mono); font-size:0.72rem; color:var(--teal);
+      text-transform:uppercase; letter-spacing:0.14em; margin-bottom:0.75rem;
+    }
+    .modal-section p, .modal-section li { font-size:0.9rem; color:#8590ac; line-height:1.8; }
+    .modal-section ul, .modal-section ol { padding-left:1.4rem; }
+    .modal-section li { margin-bottom:0.4rem; }
+    .modal-tags { display:flex; flex-wrap:wrap; gap:0.45rem; }
+    .modal-tag {
+      background:var(--teal-dim); border:1px solid var(--teal-border);
+      color:var(--teal); font-size:0.78rem; font-weight:600;
+      padding:0.25rem 0.7rem; border-radius:5px;
+    }
+    .modal-divider { height:1px; background:var(--border); margin:1.5rem 0; }
+
+    /* ─── SCROLL REVEAL ─── */
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+
+    /* ─── RESPONSIVE ─── */
+    @media(max-width:820px) {
+      nav { padding:0.9rem 1.5rem; }
+      .nav-links { display:none; }
+      #hero { padding:7rem 1.5rem 3rem; }
+      .hero-inner { grid-template-columns:1fr; }
+      .hero-stat-card { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+      .stat-divider { display:none; }
+      .wrap { padding:4rem 1.5rem; }
+      .about-grid, .contact-layout { grid-template-columns:1fr; gap:2rem; }
+    }
+  </style>
 </head>
 <body>
 
-    <header>
-        <h1>Manideep Kolluri</h1>
-        <p>Electronics and Communication Engineering Student</p>
-    </header>
+<nav>
+  <a class="nav-logo" href="#hero">mk.dev</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
 
-    <nav>
-        <a href="#about">About</a>
-        <a href="#education">Education</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
-    </nav>
-
-    <div class="container">
-
-        <section id="about">
-            <h2>About Me</h2>
-            <p>
-                I am a <strong>B.Tech student in Electronics and Communication Engineering (2023–2027)</strong> with a strong passion for technology. 
-                I bridge the gap between hardware and software, with strong programming skills in Python and hands-on experience in <strong>Machine Learning</strong>.
-            </p>
-            <p>
-                I specialize in bridging the gap between hardware architecture and intelligent software. My portfolio includes developing <strong>AI-driven solutions</strong> like a 'Digital Crop Doctor' for agricultural disease detection and conducting rigorous <strong>hardware benchmarking</strong> on memory systems (RAM/ROM). Backed by a strong command of <strong>Java, Python, and Data Structures</strong>, I thrive on solving complex technical challenges across the full technology stack.
-            </p>
-            <p style="margin-top: 15px; font-weight: bold; color: #2980b9;">
-                I am currently seeking opportunities to start my career and contribute to impactful projects.
-            </p>
-        </section>
-
-        <section id="education">
-            <h2>Education</h2>
-            
-            <div class="edu-item">
-                <span class="edu-year">2023 – 2027 (Expected)</span>
-                <div class="edu-degree">B.Tech in Electronics and Communication Engineering</div>
-                <div class="edu-school">Malla Reddy College of Engineering & Technology (MRCET)</div>
-                <span class="edu-score">CGPA: 8.44</span>
-                <p>Currently pursuing undergraduate degree.</p>
-            </div>
-
-            <div class="edu-item">
-                <span class="edu-year">2021 – 2023</span>
-                <div class="edu-degree">Intermediate (MPC)</div>
-                <div class="edu-school">Telangana State Residential Junior College</div>
-                <span class="edu-score">Percentage: 60.3%</span>
-            </div>
-
-             <div class="edu-item">
-                <span class="edu-year">2021</span>
-                <div class="edu-degree">Secondary School Certificate (SSC)</div>
-                <div class="edu-school">Telangana State Board</div>
-                <span class="edu-score">GPA: 8.8</span>
-            </div>
-
-        </section>
-
-        <section id="projects">
-            <h2>My Projects</h2>
-            <div class="project-grid">
-
-                <div class="card">
-                    <img src="https://placehold.co/600x400?text=Crop+Disease+AI" alt="Crop Project">
-                    <h3>Crop Disease Detection</h3>
-                    <p>A digital crop doctor using CNNs to detect plant diseases from leaf images.</p>
-                    <button class="btn" onclick="openModal('crop')">View Details</button>
-                </div>
-
-                <div class="card">
-                    <img src="https://placehold.co/600x400?text=RAM+ROM+Analysis" alt="RAM ROM Project">
-                    <h3>Impact of RAM and ROM</h3>
-                    <p>Analysis of memory types and their impact on system performance.</p>
-                    <button class="btn" onclick="openModal('ram')">View Details</button>
-                </div>
-
-                <div class="card">
-                    <img src="https://placehold.co/600x400?text=Portfolio" alt="Portfolio">
-                    <h3>Personal Portfolio</h3>
-                    <p>This website! Built using HTML and CSS to showcase my skills.</p>
-                    <button class="btn" onclick="openModal('portfolio')">View Details</button>
-                </div>
-
-            </div>
-        </section>
-
-        <section id="contact">
-            <h2>Contact Me</h2>
-            <p>I am open to internships and work opportunities.</p>
-            <ul>
-                <li><strong>Email:</strong> <a href="mailto:manideepkolluri73@gmail.com">manideepkolluri73@gmail.com</a></li>
-                <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/manideep-kolluri-539a6b273/" target="_blank">View Profile</a></li>
-                <li><strong>GitHub:</strong> <a href="https://github.com/Manideep136" target="_blank">View GitHub</a></li>
-            </ul>
-        </section>
-
+<section id="hero">
+  <div class="hero-orb orb1"></div>
+  <div class="hero-orb orb2"></div>
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-available"><span class="dot"></span> Available for Internships</div>
+      <h1 class="hero-name">
+        Manideep<br>
+        <span class="grad">Kolluri</span>
+      </h1>
+      <p class="hero-role"><strong>Electronics & Communication Engineer</strong> — Embedded Systems · ML · VLSI</p>
+      <p class="hero-desc">
+        ECE undergraduate bridging hardware and software — building AI-driven solutions, designing digital systems in Verilog, and simulating circuits with Arduino & MATLAB.
+      </p>
+      <div class="hero-actions">
+        <button class="btn-teal" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">View My Work</button>
+        <button class="btn-outline" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get In Touch</button>
+      </div>
     </div>
+    <div class="hero-stat-card">
+      <div class="stat-row">
+        <span class="stat-num">8.31</span>
+        <span class="stat-lbl">Current CGPA</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-row">
+        <span class="stat-num">5</span>
+        <span class="stat-lbl">Projects Built</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-row">
+        <span class="stat-num">18</span>
+        <span class="stat-lbl">Certifications</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-row">
+        <span class="stat-num">2027</span>
+        <span class="stat-lbl">Graduating Year</span>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <footer>
-        <p>&copy; 2025 Manideep Kolluri</p>
-    </footer>
-
-    <div id="projectModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <h2 id="modalTitle">Project Title</h2>
-            <div id="modalBody" class="modal-body">
-                </div>
+<section id="about">
+  <div class="wrap">
+    <p class="sec-eyebrow reveal">Who I am</p>
+    <h2 class="sec-title reveal">About <em>Me</em></h2>
+    <div class="about-grid">
+      <div class="about-body reveal">
+        <p>I am a <strong>B.Tech student in Electronics and Communication Engineering (2023–2027)</strong> at MRCET, Hyderabad, with a strong passion for the intersection of hardware and intelligent software.</p>
+        <p>I specialize in <strong>Embedded Systems, VLSI design, and Machine Learning</strong> — from designing Verilog-based memory modules to training CNN models for real-world agricultural problems. I'm also skilled in <strong>Arduino circuit simulation</strong> using Tinkercad and hardware modelling with MATLAB/Simulink.</p>
+        <p>Backed by certifications in MATLAB, Embedded Systems, VLSI, and Python, I bring both theoretical depth and hands-on project experience to every challenge I take on.</p>
+        <div class="about-seeking">🚀 Currently seeking internship opportunities in Embedded Systems & Semiconductor Technologies.</div>
+      </div>
+      <div class="info-list reveal">
+        <div class="info-row">
+          <span class="info-ico">📍</span>
+          <div class="info-row-inner">
+            <span class="info-lbl">Location</span>
+            <span class="info-val">Hyderabad, Telangana, India</span>
+          </div>
         </div>
+        <div class="info-row">
+          <span class="info-ico">📧</span>
+          <div class="info-row-inner">
+            <span class="info-lbl">Email</span>
+            <span class="info-val"><a href="mailto:manideepkolluri73@gmail.com">manideepkolluri73@gmail.com</a></span>
+          </div>
+        </div>
+        <div class="info-row">
+          <span class="info-ico">📞</span>
+          <div class="info-row-inner">
+            <span class="info-lbl">Phone</span>
+            <span class="info-val">+91 7569888742</span>
+          </div>
+        </div>
+        <div class="info-row">
+          <span class="info-ico">💼</span>
+          <div class="info-row-inner">
+            <span class="info-lbl">LinkedIn</span>
+            <span class="info-val"><a href="https://www.linkedin.com/in/manideep-kolluri-539a6b273/" target="_blank">manideep-kolluri</a></span>
+          </div>
+        </div>
+        <div class="info-row">
+          <span class="info-ico">🐙</span>
+          <div class="info-row-inner">
+            <span class="info-lbl">GitHub</span>
+            <span class="info-val"><a href="https://github.com/Manideep136" target="_blank">Manideep136</a></span>
+          </div>
+        </div>
+        <div class="info-row">
+          <span class="info-ico">🗣️</span>
+          <div class="info-row-inner">
+            <span class="info-lbl">Languages</span>
+            <span class="info-val">English · Telugu · Hindi</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <p class="sec-eyebrow reveal">What I work with</p>
+    <h2 class="sec-title reveal">Technical <em>Skills</em></h2>
+    <div class="skills-grid">
+
+      <div class="skill-card reveal">
+        <div class="skill-card-title">Programming</div>
+        <div class="bar-item"><div class="bar-top"><span class="bar-name">Python</span></div><div class="bar-track"><div class="bar-fill" data-w="88"></div></div></div>
+        <div class="bar-item"><div class="bar-top"><span class="bar-name">Java / OOP</span></div><div class="bar-track"><div class="bar-fill" data-w="78"></div></div></div>
+        <div class="bar-item"><div class="bar-top"><span class="bar-name">Data Structures</span></div><div class="bar-track"><div class="bar-fill" data-w="75"></div></div></div>
+        <div class="bar-item"><div class="bar-top"><span class="bar-name">Verilog HDL</span></div><div class="bar-track"><div class="bar-fill" data-w="72"></div></div></div>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="skill-card-title">Electronics & Hardware</div>
+        <div class="bar-item"><div class="bar-top"><span class="bar-name">Embedded Systems</span></div><div class="bar-track"><div class="bar-fill" data-w="80"></div></div></div>
+        <div class="bar-item"><div class="bar-top"><span class="bar-name">VLSI Fundamentals</span></div><div class="bar-track"><div class="bar-fill" data-w="75"></div></div></div>
+        <div class="bar-item"><div class="bar-top"><span class="bar-name">Arduino / Tinkercad</span></div><div class="bar-track"><div class="bar-fill" data-w="82"></div></div></div>
+        <div class="bar-item"><div class="bar-top"><span class="bar-name">Digital System Design</span></div><div class="bar-track"><div class="bar-fill" data-w="77"></div></div></div>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="skill-card-title">Tools & Software</div>
+        <div class="tag-wrap">
+          <span class="tag">MATLAB</span>
+          <span class="tag">Simulink</span>
+          <span class="tag">Fusion 360</span>
+          <span class="tag">GitHub</span>
+          <span class="tag">Jupyter Notebook</span>
+          <span class="tag">Google Colab</span>
+          <span class="tag">VS Code</span>
+          <span class="tag">Tinkercad</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="skill-card-title">Machine Learning</div>
+        <div class="bar-item"><div class="bar-top"><span class="bar-name">CNN / Deep Learning</span></div><div class="bar-track"><div class="bar-fill" data-w="74"></div></div></div>
+        <div class="bar-item"><div class="bar-top"><span class="bar-name">TensorFlow</span></div><div class="bar-track"><div class="bar-fill" data-w="70"></div></div></div>
+        <div class="bar-item"><div class="bar-top"><span class="bar-name">OpenCV</span></div><div class="bar-track"><div class="bar-fill" data-w="68"></div></div></div>
+        <div class="bar-item"><div class="bar-top"><span class="bar-name">Image Processing</span></div><div class="bar-track"><div class="bar-fill" data-w="72"></div></div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <p class="sec-eyebrow reveal">My background</p>
+    <h2 class="sec-title reveal">Education</h2>
+    <div class="edu-timeline">
+      <div class="edu-entry reveal">
+        <span class="edu-year">2023 – 2027 (Expected)</span>
+        <div class="edu-degree">B.Tech — Electronics & Communication Engineering</div>
+        <div class="edu-school">Malla Reddy College of Engineering & Technology (MRCET), Hyderabad</div>
+        <span class="edu-score">CGPA: 8.31 &nbsp;·&nbsp; 3rd Year</span>
+      </div>
+      <div class="edu-entry reveal">
+        <span class="edu-year">2021 – 2023</span>
+        <div class="edu-degree">Intermediate (MPC)</div>
+        <div class="edu-school">Telangana State Residential Junior College</div>
+        <span class="edu-score">60.3%</span>
+      </div>
+      <div class="edu-entry reveal">
+        <span class="edu-year">2020 – 2021</span>
+        <div class="edu-degree">Secondary School Certificate (SSC)</div>
+        <div class="edu-school">Telangana Model School, Telangana State Board</div>
+        <span class="edu-score">CGPA: 8.8</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <p class="sec-eyebrow reveal">What I've built</p>
+    <h2 class="sec-title reveal">Projects</h2>
+    <div class="projects-grid">
+
+      <div class="proj-card reveal">
+        <div class="proj-banner" style="background:linear-gradient(135deg,#061a13,#0a2a1e)">
+          <span class="proj-banner-icon">🌿</span>
+        </div>
+        <div class="proj-body">
+          <div class="proj-title">Crop Disease Detection</div>
+          <div class="proj-desc">A "Digital Crop Doctor" using CNNs to classify crop leaf diseases from images. Trained on 54,000+ PlantVillage images across 14 crops and 18 diseases.</div>
+          <div class="proj-tags">
+            <span class="proj-tag">Python</span>
+            <span class="proj-tag">TensorFlow</span>
+            <span class="proj-tag">OpenCV</span>
+            <span class="proj-tag">CNN</span>
+            <span class="proj-tag">Streamlit</span>
+          </div>
+          <div class="proj-footer">
+            <button class="proj-btn" onclick="openModal('crop')">View Details →</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-banner" style="background:linear-gradient(135deg,#0d1020,#131830)">
+          <span class="proj-banner-icon">💾</span>
+        </div>
+        <div class="proj-body">
+          <div class="proj-title">RAM & ROM System Performance</div>
+          <div class="proj-desc">Designed and simulated RAM/ROM modules in Verilog HDL. Benchmarked memory configurations for boot time and system responsiveness analysis.</div>
+          <div class="proj-tags">
+            <span class="proj-tag">Verilog</span>
+            <span class="proj-tag">UEFI/BIOS</span>
+            <span class="proj-tag">Hardware Bench</span>
+            <span class="proj-tag">UEFItool</span>
+          </div>
+          <div class="proj-footer">
+            <button class="proj-btn" onclick="openModal('ram')">View Details →</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-banner" style="background:linear-gradient(135deg,#0e100a,#1a1f0d)">
+          <span class="proj-banner-icon">🔌</span>
+        </div>
+        <div class="proj-body">
+          <div class="proj-title">Arduino Circuit Simulation</div>
+          <div class="proj-desc">Designed and simulated Arduino-based digital circuits in Tinkercad — including LED Blink, Temperature Sensor, and Traffic Light Simulation.</div>
+          <div class="proj-tags">
+            <span class="proj-tag">Arduino</span>
+            <span class="proj-tag">Tinkercad</span>
+            <span class="proj-tag">Digital I/O</span>
+            <span class="proj-tag">Embedded C</span>
+          </div>
+          <div class="proj-footer">
+            <button class="proj-btn" onclick="openModal('arduino')">View Details →</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-banner" style="background:linear-gradient(135deg,#1a1a0d,#2a2a12)">
+          <span class="proj-banner-icon">💡</span>
+        </div>
+        <div class="proj-body">
+          <div class="proj-title">Smart Street Light with Motion-Based Brightness Control</div>
+          <div class="proj-desc">An energy-efficient smart lighting simulation that dynamically adjusts LED brightness based on motion detection.</div>
+          <div class="proj-tags">
+            <span class="proj-tag">Arduino</span>
+            <span class="proj-tag">Tinkercad</span>
+            <span class="proj-tag">Sensors</span>
+            <span class="proj-tag">Power Optimization</span>
+          </div>
+          <div class="proj-footer">
+            <button class="proj-btn" onclick="openModal('smartlight')">View Details →</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-banner" style="background:linear-gradient(135deg,#1a0d0d,#2a1212)">
+          <span class="proj-banner-icon">🚨</span>
+        </div>
+        <div class="proj-body">
+          <div class="proj-title">Proximity-Based Theft Detection & Alert System</div>
+          <div class="proj-desc">A security embedded system utilizing distance sensors to detect unauthorized proximity and trigger an immediate alarm.</div>
+          <div class="proj-tags">
+            <span class="proj-tag">Arduino</span>
+            <span class="proj-tag">Tinkercad</span>
+            <span class="proj-tag">Ultrasonic Sensor</span>
+            <span class="proj-tag">Embedded C</span>
+          </div>
+          <div class="proj-footer">
+            <button class="proj-btn" onclick="openModal('theftalert')">View Details →</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="certifications">
+  <div class="wrap">
+    <p class="sec-eyebrow reveal">Credentials</p>
+    <h2 class="sec-title reveal">Certifications</h2>
+    <div class="cert-filters reveal">
+      <button class="cf-btn active" onclick="filterCerts('all', this)">All <span class="cf-count">18</span></button>
+      <button class="cf-btn" onclick="filterCerts('nielit', this)">NIELIT</button>
+      <button class="cf-btn" onclick="filterCerts('ai', this)">AI & ML</button>
+      <button class="cf-btn" onclick="filterCerts('iot', this)">IoT & Hardware</button>
+      <button class="cf-btn" onclick="filterCerts('other', this)">Others</button>
     </div>
 
-    <script>
-        // Data for your projects
-        const projectData = {
-            'crop': {
-                title: "Crop Disease Detection Using Image Classification",
-                content: `
-                    <p><strong>Abstract:</strong> This project acts as a "Digital Crop Doctor," leveraging Deep Learning (CNNs) to solve the problem of manual disease diagnosis which is often slow, subjective, and prone to error.</p>
-                    
-                    <h3>Technology Stack</h3>
-                    <p>
-                        <span class="tech-tag">Python</span> 
-                        <span class="tech-tag">TensorFlow</span> 
-                        <span class="tech-tag">OpenCV</span>
-                        <span class="tech-tag">Streamlit</span>
-                        <span class="tech-tag">Google Colab</span>
-                    </p>
+    <div class="certs-grid" id="certs-grid">
 
-                    <h3>Methodology (Step-by-Step)</h3>
-                    <ol>
-                        <li><strong>Image Acquisition:</strong> Capturing raw leaf images from the field.</li>
-                        <li><strong>Preprocessing:</strong> Resizing and normalizing images to remove noise and standardize inputs.</li>
-                        <li><strong>Segmentation:</strong> Isolating the specific "Region of Interest" (the diseased part) from the healthy leaf.</li>
-                        <li><strong>Feature Extraction:</strong> Identifying patterns such as color, texture, and shape.</li>
-                        <li><strong>Classification:</strong> The model predicts if the leaf is "Healthy" or "Diseased" (e.g., Bacterial Spot, Early Blight).</li>
-                    </ol>
+      <div class="cert-card reveal" data-cat="nielit">
+        <div class="cert-icon">📊</div>
+        <div class="cert-info">
+          <span class="cert-name">Introduction to MATLAB & Simulink</span>
+          <span class="cert-issuer">NIELIT — Calicut</span>
+          <span class="cert-year">Feb 2026</span>
+        </div>
+      </div>
 
-                    <h3>The Algorithm: Convolutional Neural Network (CNN)</h3>
-                    <p>We implemented a Deep Learning model specifically designed for grid-like data (images). It consists of:</p>
-                    <ul>
-                        <li><strong>Convolutional Layer:</strong> Detects simple features like edges and colors.</li>
-                        <li><strong>Pooling Layer:</strong> Shrinks the image size to reduce computation while keeping important details.</li>
-                        <li><strong>Fully Connected Layer:</strong> Makes the final decision/classification.</li>
-                    </ul>
+      <div class="cert-card reveal" data-cat="nielit">
+        <div class="cert-icon">🔧</div>
+        <div class="cert-info">
+          <span class="cert-name">Embedded for Beginners</span>
+          <span class="cert-issuer">NIELIT — Calicut</span>
+          <span class="cert-year">Jan 2026</span>
+        </div>
+      </div>
 
-                    <h3>Dataset Details</h3>
-                    <ul>
-                        <li><strong>Source:</strong> PlantVillage Dataset</li>
-                        <li><strong>Volume:</strong> Over 54,000 images</li>
-                        <li><strong>Variety:</strong> Covers 14 crop species (Tomato, Potato, Corn, etc.) and 18 different diseases.</li>
-                    </ul>
+      <div class="cert-card reveal" data-cat="nielit">
+        <div class="cert-icon">🔬</div>
+        <div class="cert-info">
+          <span class="cert-name">VLSI for Beginners</span>
+          <span class="cert-issuer">NIELIT — Calicut</span>
+          <span class="cert-year">Feb 2026</span>
+        </div>
+      </div>
 
-                    <h3>Key Results</h3>
-                    <p>The system achieved high accuracy in validation testing. It empowers farmers to minimize pesticide use by identifying the exact disease early, rather than spraying chemicals blindly.</p>
+      <div class="cert-card reveal" data-cat="nielit">
+        <div class="cert-icon">🐍</div>
+        <div class="cert-info">
+          <span class="cert-name">Python for Beginners</span>
+          <span class="cert-issuer">NIELIT — Calicut</span>
+          <span class="cert-year">Jan 2026</span>
+        </div>
+      </div>
 
-                    <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
-                    
-                    <h3>Project Downloads</h3>
-                    <p>Click below to view the full presentation and documentation.</p>
-                    
-                    <div style="margin-top: 15px;">
-                        <a href="presentation.pptx" download class="btn" style="background-color: #e67e22; margin-right: 10px;">
-                            Download PPT
-                        </a>
-                        <a href="documentation.docx" download class="btn" style="background-color: #27ae60;">
-                            Download Docs
-                        </a>
-                    </div>
-                `
-            },
-            'ram': {
-                title: "Impact of RAM and ROM on System Booting & Performance",
-                content: `
-                    <p><strong>Abstract:</strong> This project investigates how different configurations of Random Access Memory (RAM) and Read-Only Memory (ROM) influence computer boot times and overall system responsiveness. It highlights the synergy between volatile memory and non-volatile firmware storage.</p>
+      <div class="cert-card reveal" data-cat="other">
+        <div class="cert-icon">🗣️</div>
+        <div class="cert-info">
+          <span class="cert-name">Communication Skills Certification</span>
+          <span class="cert-issuer">Cambridge Assessment English</span>
+          <span class="cert-year">2025</span>
+        </div>
+      </div>
 
-                    <h3>Key Technical Concepts</h3>
-                    <p>
-                        <span class="tech-tag">Computer Organization</span> 
-                        <span class="tech-tag">Hardware Benchmarking</span> 
-                        <span class="tech-tag">Firmware Analysis (BIOS/UEFI)</span>
-                        <span class="tech-tag">System Optimization</span>
-                    </p>
+      <div class="cert-card reveal" data-cat="iot">
+        <div class="cert-icon">🖨️</div>
+        <div class="cert-info">
+          <span class="cert-name">CAD and 3D Printing</span>
+          <span class="cert-issuer">thingQbator / Nasscom Foundation (Cisco CSR)</span>
+          <span class="cert-year">2025</span>
+        </div>
+      </div>
 
-                    <h3>Methodology & Tools</h3>
-                    <ul>
-                        <li><strong>Hardware Benchmarking:</strong> Conducted comparative analysis of boot speeds across varying RAM capacities (2GB, 4GB, and 8GB) to measure improvements in speed.</li>
-                        <li><strong>Firmware Analysis:</strong> Investigated how optimized UEFI firmware can reduce boot latency compared to traditional BIOS.</li>
-                        <li><strong>Tools Used:</strong> 
-                            <ul>
-                                <li><strong>Boot Racer:</strong> For precise measurement of boot duration.</li>
-                                <li><strong>UEFItool:</strong> To explore ROM firmware structure and optimization.</li>
-                            </ul>
-                        </li>
-                    </ul>
+      <div class="cert-card reveal" data-cat="other">
+        <div class="cert-icon">🛡️</div>
+        <div class="cert-info">
+          <span class="cert-name">Introduction to Cyber Security</span>
+          <span class="cert-issuer">Cisco Networking Academy</span>
+          <span class="cert-year">Jan 2026</span>
+        </div>
+      </div>
 
-                    <h3>Key Findings</h3>
-                    <ol>
-                        <li><strong>Boot Optimization:</strong> Optimized ROM (UEFI) is critical for reliable startup and significantly shortens boot times.</li>
-                        <li><strong>Performance Impact:</strong> Sufficient RAM capacity directly reduces system lag and improves multitasking, whereas ROM has minimal impact on performance after the system has booted.</li>
-                        <li><strong>Synergy:</strong> Efficient computing relies on the distinct roles of both memories: ROM for initialization and RAM for operational speed.</li>
-                    </ol>
+      <div class="cert-card reveal" data-cat="iot">
+        <div class="cert-icon">⚙️</div>
+        <div class="cert-info">
+          <span class="cert-name">An Introduction to Embedded Systems</span>
+          <span class="cert-issuer">thingQbator / Nasscom Foundation (Cisco CSR)</span>
+          <span class="cert-year">2025</span>
+        </div>
+      </div>
 
-                    <h3>Conclusion</h3>
-                    <p>The study confirms that larger/faster RAM reduces lag during active use, while optimized ROM firmware ensures faster system startups. Future improvements could explore next-gen DDR5 RAM for even greater efficiency.</p>
+      <div class="cert-card reveal" data-cat="ai">
+        <div class="cert-icon">✨</div>
+        <div class="cert-info">
+          <span class="cert-name">Introduction to Generative AI Studio</span>
+          <span class="cert-issuer">Google / Upskill</span>
+          <span class="cert-year">Dec 2025</span>
+        </div>
+      </div>
 
-                    <hr style="margin: 20px 0; border: 0; border-top: 1px solid #eee;">
+      <div class="cert-card reveal" data-cat="ai">
+        <div class="cert-icon">🛰️</div>
+        <div class="cert-info">
+          <span class="cert-name">Geodata Processing using Python & ML</span>
+          <span class="cert-issuer">IIRS — Indian Space Research Organisation (ISRO)</span>
+          <span class="cert-year">Feb 2026</span>
+        </div>
+      </div>
 
-                    <h3>Project Downloads</h3>
-                    <p>Click below to view the full presentation.</p>
+      <div class="cert-card reveal" data-cat="iot">
+        <div class="cert-icon">🌐</div>
+        <div class="cert-info">
+          <span class="cert-name">Introduction to IoT and Digital Transformation</span>
+          <span class="cert-issuer">Cisco Networking Academy</span>
+          <span class="cert-year">Mar 2026</span>
+        </div>
+      </div>
 
-                    <div style="margin-top: 15px;">
-                        <a href="ram_rom.pptx" download class="btn" style="background-color: #e67e22; margin-right: 10px;">
-                            Download Presentation
-                        </a>
-                    </div>
-                `
-            },
-            'portfolio': {
-                title: "Personal Portfolio Website",
-                content: `
-                    <p><strong>Overview:</strong> A responsive personal website to showcase my academic projects and technical skills to potential employers.</p>
-                    
-                    <h3>Tools Used</h3>
-                    <p><span class="tech-tag">HTML5</span> <span class="tech-tag">CSS3</span> <span class="tech-tag">JavaScript</span></p>
-                    
-                    <h3>Technical Details</h3>
-                    <p>This site was built with a "mobile-first" philosophy to ensuring it looks good on phones and desktops. It features:</p>
-                    <ul>
-                        <li><strong>CSS Grid:</strong> For the responsive layout of project cards.</li>
-                        <li><strong>JavaScript DOM Manipulation:</strong> To create the dynamic popup modals (like the one you are reading now) without needing multiple pages.</li>
-                        <li><strong>Clean UI:</strong> Focused on readability and professional presentation.</li>
-                    </ul>
-                `
-            }
-        };
+      <div class="cert-card reveal" data-cat="iot">
+        <div class="cert-icon">📡</div>
+        <div class="cert-info">
+          <span class="cert-name">Developing IoT Applications</span>
+          <span class="cert-issuer">thingQbator / Nasscom Foundation (Cisco CSR)</span>
+          <span class="cert-year">2025</span>
+        </div>
+      </div>
 
-        // Function to Open Modal
-        function openModal(projectId) {
-            const modal = document.getElementById("projectModal");
-            const title = document.getElementById("modalTitle");
-            const body = document.getElementById("modalBody");
-            
-            // Inject content based on the ID clicked
-            if (projectData[projectId]) {
-                title.innerText = projectData[projectId].title;
-                body.innerHTML = projectData[projectId].content;
-                modal.style.display = "block";
-            }
-        }
+      <div class="cert-card reveal" data-cat="ai">
+        <div class="cert-icon">🟢</div>
+        <div class="cert-info">
+          <span class="cert-name">Getting Started with AI on Jetson Nano</span>
+          <span class="cert-issuer">NVIDIA — Certificate of Competency</span>
+          <span class="cert-year">Jan 2026</span>
+        </div>
+      </div>
 
-        // Function to Close Modal
-        function closeModal() {
-            document.getElementById("projectModal").style.display = "none";
-        }
+      <div class="cert-card reveal" data-cat="ai">
+        <div class="cert-icon">📈</div>
+        <div class="cert-info">
+          <span class="cert-name">GenAI Powered Data Analytics Job Simulation</span>
+          <span class="cert-issuer">TCS / Forage</span>
+          <span class="cert-year">Jan 2026</span>
+        </div>
+      </div>
 
-        // Close modal if user clicks outside the box
-        window.onclick = function(event) {
-            const modal = document.getElementById("projectModal");
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-    </script>
+      <div class="cert-card reveal" data-cat="other">
+        <div class="cert-icon">📋</div>
+        <div class="cert-info">
+          <span class="cert-name">Project Management 101</span>
+          <span class="cert-issuer">Upskill</span>
+          <span class="cert-year">Dec 2025</span>
+        </div>
+      </div>
 
+      <div class="cert-card reveal" data-cat="other">
+        <div class="cert-icon">🌍</div>
+        <div class="cert-info">
+          <span class="cert-name">Build Website With AI</span>
+          <span class="cert-issuer">Upskill</span>
+          <span class="cert-year">Dec 2025</span>
+        </div>
+      </div>
+
+      <div class="cert-card reveal" data-cat="nielit">
+        <div class="cert-icon">🔌</div>
+        <div class="cert-info">
+          <span class="cert-name">VLSI System On Chip Design — Overview</span>
+          <span class="cert-issuer">NIELIT</span>
+          <span class="cert-year">Mar 2026</span>
+        </div>
+      </div>
+
+      <div class="cert-card reveal" data-cat="other">
+        <div class="cert-icon">🔒</div>
+        <div class="cert-info">
+          <span class="cert-name">Introduction to Cyber Security</span>
+          <span class="cert-issuer">Cisco Networking Academy</span>
+          <span class="cert-year">Jan 2026</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <p class="sec-eyebrow reveal">Let's connect</p>
+    <h2 class="sec-title reveal">Get In <em>Touch</em></h2>
+    <div class="contact-layout">
+      <div class="contact-info-col reveal">
+        <p>I'm open to internship opportunities, collaborative projects, and conversations around embedded systems, VLSI, and machine learning. Feel free to reach out!</p>
+        <div class="contact-links">
+          <a href="mailto:manideepkolluri73@gmail.com" class="contact-link-row">
+            <span class="clr-ico">📧</span>
+            <div class="clr-inner"><span class="clr-label">Email</span><span class="clr-val">manideepkolluri73@gmail.com</span></div>
+          </a>
+          <a href="tel:+917569888742" class="contact-link-row">
+            <span class="clr-ico">📞</span>
+            <div class="clr-inner"><span class="clr-label">Phone</span><span class="clr-val">+91 7569888742</span></div>
+          </a>
+          <a href="https://www.linkedin.com/in/manideep-kolluri-539a6b273/" target="_blank" class="contact-link-row">
+            <span class="clr-ico">💼</span>
+            <div class="clr-inner"><span class="clr-label">LinkedIn</span><span class="clr-val">manideep-kolluri-539a6b273</span></div>
+          </a>
+          <a href="https://github.com/Manideep136" target="_blank" class="contact-link-row">
+            <span class="clr-ico">🐙</span>
+            <div class="clr-inner"><span class="clr-label">GitHub</span><span class="clr-val">Manideep136</span></div>
+          </a>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="contact-form">
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" id="cf-name" placeholder="John Doe"/>
+          </div>
+          <div class="form-group">
+            <label>Your Email</label>
+            <input type="email" id="cf-email" placeholder="john@example.com"/>
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea id="cf-msg" rows="5" placeholder="Tell me about the opportunity..."></textarea>
+          </div>
+          <button class="form-submit" onclick="sendMsg()">Send Message ✦</button>
+          <div id="form-toast">✅ Your email app is opening — send the email to reach Manideep!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2025 <span>Manideep Kolluri</span> · Built with passion in Hyderabad 🇮🇳</p>
+</footer>
+
+<div class="modal-overlay" id="modal" onclick="closeModal(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModalBtn()">✕</button>
+    <div class="modal-title" id="modal-title"></div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+  /* ── MODAL DATA ── */
+  const projects = {
+    crop: {
+      title: "🌿 Crop Disease Detection Using Image Classification",
+      html: `
+        <div class="modal-section">
+          <h4>Overview</h4>
+          <p>A "Digital Crop Doctor" that leverages Deep Learning (CNNs) to solve manual disease diagnosis — slow, subjective, and error-prone. Farmers can now identify disease early and minimize pesticide use.</p>
+        </div>
+        <div class="modal-section">
+          <h4>Tech Stack</h4>
+          <div class="modal-tags">
+            <span class="modal-tag">Python</span><span class="modal-tag">TensorFlow</span>
+            <span class="modal-tag">OpenCV</span><span class="modal-tag">Streamlit</span>
+            <span class="modal-tag">Google Colab</span><span class="modal-tag">Jupyter Notebook</span>
+          </div>
+        </div>
+        <div class="modal-section">
+          <h4>Methodology</h4>
+          <ol>
+            <li><strong>Image Acquisition</strong> — Capturing raw leaf images from the field.</li>
+            <li><strong>Preprocessing</strong> — Resizing, normalization, dataset preparation.</li>
+            <li><strong>Segmentation</strong> — Isolating the Region of Interest (diseased area).</li>
+            <li><strong>Feature Extraction</strong> — Identifying color, texture, and shape patterns.</li>
+            <li><strong>Classification</strong> — CNN predicts Healthy / Diseased with disease type.</li>
+          </ol>
+        </div>
+        <div class="modal-section">
+          <h4>Dataset</h4>
+          <ul>
+            <li><strong>Source:</strong> PlantVillage Dataset</li>
+            <li><strong>Volume:</strong> 54,000+ images</li>
+            <li><strong>Coverage:</strong> 14 crop species, 18 different diseases</li>
+          </ul>
+        </div>
+        <div class="modal-section">
+          <h4>Key Results</h4>
+          <p>Achieved high validation accuracy. Optimized model training techniques improved prediction reliability. System empowers farmers to target specific diseases rather than applying chemicals broadly.</p>
+        </div>`
+    },
+    ram: {
+      title: "💾 Impact of RAM & ROM on System Booting & Performance",
+      html: `
+        <div class="modal-section">
+          <h4>Overview</h4>
+          <p>Investigates how different RAM/ROM configurations influence computer boot times and system responsiveness. Highlights the synergy between volatile memory and non-volatile firmware storage.</p>
+        </div>
+        <div class="modal-section">
+          <h4>Tech Stack</h4>
+          <div class="modal-tags">
+            <span class="modal-tag">Verilog HDL</span><span class="modal-tag">Computer Architecture</span>
+            <span class="modal-tag">UEFI/BIOS Analysis</span><span class="modal-tag">Boot Racer</span>
+            <span class="modal-tag">UEFItool</span>
+          </div>
+        </div>
+        <div class="modal-section">
+          <h4>Methodology</h4>
+          <ul>
+            <li>Designed RAM and ROM modules using Verilog HDL.</li>
+            <li>Simulated memory architecture to analyze system boot behavior.</li>
+            <li>Benchmarked boot speeds across 2GB, 4GB, and 8GB RAM configurations.</li>
+            <li>Analyzed UEFI vs legacy BIOS firmware using UEFItool.</li>
+          </ul>
+        </div>
+        <div class="modal-section">
+          <h4>Key Findings</h4>
+          <ol>
+            <li><strong>Boot Optimization:</strong> Optimized UEFI firmware significantly reduces startup latency.</li>
+            <li><strong>Performance Impact:</strong> Larger RAM capacity reduces lag and improves multitasking.</li>
+            <li><strong>Synergy:</strong> ROM handles initialization; RAM governs operational speed — both are critical.</li>
+          </ol>
+        </div>`
+    },
+    arduino: {
+      title: "🔌 Arduino Circuit Simulation",
+      html: `
+        <div class="modal-section">
+          <h4>Overview</h4>
+          <p>Designed and simulated a series of Arduino-based digital circuits using Tinkercad. Verified circuit functionality through simulation before any hardware implementation, following embedded systems best practices.</p>
+        </div>
+        <div class="modal-section">
+          <h4>Tech Stack</h4>
+          <div class="modal-tags">
+            <span class="modal-tag">Arduino</span><span class="modal-tag">Tinkercad</span>
+            <span class="modal-tag">Embedded C</span><span class="modal-tag">Digital I/O</span>
+          </div>
+        </div>
+        <div class="modal-section">
+          <h4>Circuits Implemented</h4>
+          <ul>
+            <li><strong>Arduino LED Blink Circuit</strong> — Basic digital output control and timing.</li>
+            <li><strong>Temperature Sensor Interface</strong> — Analog sensor reading and serial monitoring.</li>
+            <li><strong>Traffic Light Simulation</strong> — State machine logic with timed LED sequencing.</li>
+          </ul>
+        </div>
+        <div class="modal-section">
+          <h4>Key Learnings</h4>
+          <p>Gained practical understanding of digital I/O operations, PWM control, analog-to-digital conversion, and real-time embedded logic design using simulation-first methodology.</p>
+        </div>`
+    },
+    smartlight: {
+      title: "💡 Smart Street Light with Motion-Based Brightness Control",
+      html: `
+        <div class="modal-section">
+          <h4>Overview</h4>
+          <p>This project simulates an energy-efficient street lighting system. It is designed to conserve power by keeping lights dim when the area is empty, and automatically increasing brightness when motion is detected.</p>
+        </div>
+        <div class="modal-section">
+          <h4>Tech Stack</h4>
+          <div class="modal-tags">
+            <span class="modal-tag">Arduino</span><span class="modal-tag">Tinkercad</span>
+            <span class="modal-tag">Motion Sensors</span><span class="modal-tag">Embedded C</span>
+          </div>
+        </div>
+        <div class="modal-section">
+          <h4>Live Simulation</h4>
+          <p>You can interact with the live circuit simulation directly on Tinkercad:</p>
+          <a href="https://www.tinkercad.com/things/cGgs1uyoQSj-neat-bombul-amur" target="_blank" class="btn-teal" style="display:inline-block; margin-top:0.5rem; text-decoration:none;">View on Tinkercad</a>
+        </div>`
+    },
+    theftalert: {
+      title: "🚨 Proximity-Based Theft Detection & Alert System",
+      html: `
+        <div class="modal-section">
+          <h4>Overview</h4>
+          <p>An embedded security project that functions as a proximity alarm. By continuously measuring distance using an ultrasonic sensor, the system triggers alerts when an object breaches a predefined security threshold.</p>
+        </div>
+        <div class="modal-section">
+          <h4>Tech Stack</h4>
+          <div class="modal-tags">
+            <span class="modal-tag">Arduino</span><span class="modal-tag">Tinkercad</span>
+            <span class="modal-tag">Ultrasonic Sensor</span><span class="modal-tag">Embedded C</span>
+          </div>
+        </div>
+        <div class="modal-section">
+          <h4>Live Simulation</h4>
+          <p>You can interact with the live circuit simulation directly on Tinkercad:</p>
+          <a href="https://www.tinkercad.com/things/kHu26BFpyxq-smashing-kasi-fyyran" target="_blank" class="btn-teal" style="display:inline-block; margin-top:0.5rem; text-decoration:none;">View on Tinkercad</a>
+        </div>`
+    }
+  };
+
+  function openModal(id) {
+    const p = projects[id]; if (!p) return;
+    document.getElementById('modal-title').textContent = p.title;
+    document.getElementById('modal-body').innerHTML = p.html;
+    document.getElementById('modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModalBtn() {
+    document.getElementById('modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeModal(e) {
+    if (e.target === document.getElementById('modal')) closeModalBtn();
+  }
+  document.addEventListener('keydown', e => { if (e.key==='Escape') closeModalBtn(); });
+
+  /* ── SCROLL REVEAL ── */
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  /* ── SKILL BARS ── */
+  const barObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.bar-fill').forEach(bar => {
+          bar.style.width = bar.dataset.w + '%';
+        });
+        barObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.skill-card').forEach(el => barObs.observe(el));
+
+  /* ── CONTACT FORM ── */
+  function sendMsg() {
+    const n = document.getElementById('cf-name').value.trim();
+    const e = document.getElementById('cf-email').value.trim();
+    const m = document.getElementById('cf-msg').value.trim();
+    if (!n || !e || !m) { alert('Please fill in all fields.'); return; }
+
+    const subject = encodeURIComponent('Portfolio Enquiry from ' + n);
+    const body = encodeURIComponent(
+      'Hi Manideep,\n\n' + m + '\n\n---\nFrom: ' + n + '\nEmail: ' + e
+    );
+    window.location.href = 'mailto:manideepkolluri73@gmail.com?subject=' + subject + '&body=' + body;
+
+    const toast = document.getElementById('form-toast');
+    toast.style.display = 'block';
+    document.getElementById('cf-name').value = '';
+    document.getElementById('cf-email').value = '';
+    document.getElementById('cf-msg').value = '';
+    setTimeout(() => { toast.style.display = 'none'; }, 5000);
+  }
+  /* ── CERT FILTER ── */
+  function filterCerts(cat, btn) {
+    document.querySelectorAll('.cf-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.cert-card').forEach(card => {
+      if (cat === 'all' || card.dataset.cat === cat) {
+        card.classList.remove('hidden');
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+  }
+</script>
 </body>
 </html>
